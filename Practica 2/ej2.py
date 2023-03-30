@@ -1,3 +1,5 @@
+from collections import Counter
+
 text = """NumPy is the fundamental package for scientific computing with Python.
 
 Website: https://www.numpy.org
@@ -45,13 +47,19 @@ We also have a biweekly community call, details of which are announced on the ma
 If you are new to contributing to open source, this guide helps explain why, what, and how to successfully get involved."""
 
 textList = text.split()
-for element in textList:
-    max = 0
-    palabraMax = " "
-    x = textList.count(element.strip(", ()."))
-    if x > max:
-        max = x
-        palabraMax = element.strip(" ,().")
+max = 0
+maxWord = ""
+print(textList)
 
+for word in textList:
+    qty = textList.count(word.strip(" ,().").lower())
+    if qty > max:
+        max = qty
+        maxWord = word.strip(" ,().").lower()
 
-    
+print(maxWord)
+
+count = Counter()
+for word in textList:
+    count[word] += 1
+print(count.most_common(1))

@@ -46,7 +46,8 @@ If you are new to contributing to open source, this guide helps explain why, wha
 
 
 
-for element in text.split():
-    if element.startswith("http"):
-        print(element)
-    #print(element if element.startswith("http"))
+
+
+print([element for element in text.split() if element.startswith("http")])
+
+
