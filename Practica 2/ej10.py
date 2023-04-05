@@ -1,5 +1,3 @@
-from collections import Counter
-
 names = ''' 'Agustin', 'Alan', 'Andrés', 'Ariadna', 'Bautista', 'CAROLINA', 'CESAR', 'David',
 'Diego', 'Dolores', 'DYLAN', 'ELIANA', 'Emanuel', 'Fabián', 'Facundo', 'Francsica', 
 'FEDERICO', 'Fernanda', 'GONZALO', 'Gregorio', 'Ignacio', 'Jonathan', 'Joaquina', 'Jorge',
@@ -18,7 +16,7 @@ def generateZip(names, notes1, notes2):
     return list(zip(names.replace('\n','').replace(' ', '').replace("'", '').split(','),notes1, notes2))
 
 def promNotes(L):
-    '''Esta funcion retorna un diccionario donde key = "nombre", value = "promedio"'''
+    '''Esta funcion recibe una lista de tuplas (nombre,nota1, nota2) y retorna un diccionario donde {key = "nombre", value = "promedio"}'''
     promStud = {}
     totalCourse = 0
     for tup in L:
@@ -28,23 +26,24 @@ def promNotes(L):
     return promStud
 
 def promGlobal(L):
-    '''Esta funcion retorna un double con el promedio general de la clase'''
+    '''Esta funcion recibe una lista de tuplas (nombre,nota1, nota2) y retorna un double con el promedio general de la clase'''
     totalCourse = 0
     for tup in L:
         totalCourse += tup[1] + tup[2]
     return round((totalCourse / len(L)), 2)
 
-def highestProm(D):
-    '''Esta funcion devuelve 2 valores (nombreEstudiante, promedio)'''
-    max = -1
-    for note in D:
-        if D[note]> max:
-            max = D[note]
-            maxName = note
-    return maxName, max
 
-def lowestNote(L):
-    '''Esta funcion devuelve 2 valores (nombreEstudiante, nota)'''
+def highestProm(D):
+    '''Esta funcion recibe un Diccionario {key = "nombre", value = "promedio"} y devuelve 2 valores (nombreEstudiante, promedio)'''
+    maxProm = max(D.values()) 
+    maxStud = max(D, key=D.get)
+
+    return [maxStud, maxProm]
+    
+    
+
+def lowestNote(L):  #intente usar min() pero no entendi como hacerlo ya que en L recibo una lista de tuplas
+    '''Esta funcion recibe una lista de tuplas (nombre,nota1, nota2) y devuelve 2 valores (nombreEstudiante, nota) del estudiante con la nota mas baja'''
     min = 999
     for tup in L:
         if tup[1] < min:
@@ -56,17 +55,18 @@ def lowestNote(L):
     return minName, min
 
 
+
 zipedList = generateZip(names, notes_1, notes_2)
-#print(zipedList)
+print(f'- Primera estructura: se hizo un zip y obtenemos una lista de tuplas (nombre, nota1, nota2) \n\n {zipedList} \n')
 
 promStuds = promNotes(zipedList)
-print(promStuds)
+print(f'- Segunda estructura: se hizo un diccionario key = "nombre", value = "promedio" \n\n {promStuds} \n\n')
 
 promClass = promGlobal(zipedList)
-#print(promClass)
+print(f'- El promedio global de notas es {promClass}')
 
-highPromStud, prom = highestProm(promStuds)
-#print(highPromStud, prom)
+highPromStud= highestProm(promStuds)
+print(f'- El alumno {highPromStud[0].upper()} es el de mayor promedio con {highPromStud[1]}')
 
-lowerNoteStud, note = lowestNote(zipedList)
-#print(lowerNoteStud, note)
+lowerNoteStud = lowestNote(zipedList)
+print(f'- El alumno {lowerNoteStud[0]} es el de menor nota con {lowerNoteStud[1]}')
