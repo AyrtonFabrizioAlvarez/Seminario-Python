@@ -11,9 +11,9 @@ notes_2 = [30, 95, 28, 84, 84, 43, 66, 51, 4, 11, 58, 10, 13, 34, 96, 71, 86, 37
            87, 14, 14, 49, 27, 55, 69, 77, 59, 57, 40, 96, 24, 30, 73, 95, 19, 47, 15, 31,
            39, 15, 74, 33, 57, 10]
 
-def generateZip(names, notes1, notes2):
+def generateZip(names, notes_1, notes_2):
     ''' Esta funcion retorna una lista de tuplas que fue un zip de 3 archivos (names <string>, notes1 <list>, notes2<list>)'''
-    return list(zip(names.replace('\n','').replace(' ', '').replace("'", '').split(','),notes1, notes2))
+    return list(zip(names.replace('\n','').replace(' ', '').replace("'", '').split(','),notes_1, notes_2))
 
 def promNotes(L):
     '''Esta funcion recibe una lista de tuplas (nombre,nota1, nota2) y retorna un diccionario donde {key = "nombre", value = "promedio"}'''
@@ -25,12 +25,10 @@ def promNotes(L):
         promStud[tup[0]] = prom
     return promStud
 
-def promGlobal(L):
+def promGlobal(D):
     '''Esta funcion recibe una lista de tuplas (nombre,nota1, nota2) y retorna un double con el promedio general de la clase'''
-    totalCourse = 0
-    for tup in L:
-        totalCourse += tup[1] + tup[2]
-    return round((totalCourse / len(L)), 2)
+    total = sum(D.values())
+    return round( (sum(D.values()) / len(D)), 2)
 
 
 def highestProm(D):
@@ -62,7 +60,7 @@ print(f'- Primera estructura: se hizo un zip y obtenemos una lista de tuplas (no
 promStuds = promNotes(zipedList)
 print(f'- Segunda estructura: se hizo un diccionario key = "nombre", value = "promedio" \n\n {promStuds} \n\n')
 
-promClass = promGlobal(zipedList)
+promClass = promGlobal(promStuds)
 print(f'- El promedio global de notas es {promClass}')
 
 highPromStud= highestProm(promStuds)
