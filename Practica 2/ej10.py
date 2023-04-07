@@ -53,18 +53,18 @@ def lowestNote(L):  #intente usar min() pero no entendi como hacerlo ya que en L
     return minName, min
 
 
+if __name__ == '__main__':
+    zipedList = generateZip(names, notes_1, notes_2)
+    print(f'- Primera estructura: se hizo un zip y obtenemos una lista de tuplas (nombre, nota1, nota2) \n\n {zipedList} \n')
 
-zipedList = generateZip(names, notes_1, notes_2)
-print(f'- Primera estructura: se hizo un zip y obtenemos una lista de tuplas (nombre, nota1, nota2) \n\n {zipedList} \n')
+    promStuds = promNotes(zipedList)
+    print(f'- Segunda estructura: se hizo un diccionario key = "nombre", value = "promedio" \n\n {promStuds} \n\n')
 
-promStuds = promNotes(zipedList)
-print(f'- Segunda estructura: se hizo un diccionario key = "nombre", value = "promedio" \n\n {promStuds} \n\n')
+    promClass = promGlobal(promStuds)
+    print(f'- El promedio global de notas es {promClass}')
 
-promClass = promGlobal(promStuds)
-print(f'- El promedio global de notas es {promClass}')
+    highPromStud= highestProm(promStuds)
+    print(f'- El alumno {highPromStud[0].upper()} es el de mayor promedio con {highPromStud[1]}')
 
-highPromStud= highestProm(promStuds)
-print(f'- El alumno {highPromStud[0].upper()} es el de mayor promedio con {highPromStud[1]}')
-
-lowerNoteStud = lowestNote(zipedList)
-print(f'- El alumno {lowerNoteStud[0]} es el de menor nota con {lowerNoteStud[1]}')
+    lowerNoteStud = lowestNote(zipedList)
+    print(f'- El alumno {lowerNoteStud[0]} es el de menor nota con {lowerNoteStud[1]}')
