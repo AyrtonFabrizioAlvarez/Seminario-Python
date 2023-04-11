@@ -11,60 +11,50 @@ notes_2 = [30, 95, 28, 84, 84, 43, 66, 51, 4, 11, 58, 10, 13, 34, 96, 71, 86, 37
            87, 14, 14, 49, 27, 55, 69, 77, 59, 57, 40, 96, 24, 30, 73, 95, 19, 47, 15, 31,
            39, 15, 74, 33, 57, 10]
 
+#INCISO 1
 def generateZip(names, notes_1, notes_2):
-    ''' Esta funcion retorna una lista de tuplas que fue un zip de 3 archivos (names <string>, notes1 <list>, notes2<list>)'''
-    return list(zip(names.replace('\n','').replace(' ', '').replace("'", '').split(','),notes_1, notes_2))
+    fixedText = names.replace('\n','').replace(' ', '').replace("'", '').split(',')
+    return {name: (note1, note2) for name, note1, note2 in zip(fixedText,notes_1, notes_2)}
 
-def promNotes(L):
-    '''Esta funcion recibe una lista de tuplas (nombre,nota1, nota2) y retorna un diccionario donde {key = "nombre", value = "promedio"}'''
-    promStud = {}
-    totalCourse = 0
-    for tup in L:
-        total = tup[1] + tup[2]
-        prom = total / 2
-        promStud[tup[0]] = prom
-    return promStud
+#INCISO 2
+def promNotes(D):
+    '''Esta funcion recibe un diccionario {nombre: (nota1, nota2)} y retorna un diccionario donde {nombre: promedio}'''
+    return {name: sum(notes)/2 for name, notes in D.items()}
 
+#INCISO 3
 def promGlobal(D):
-    '''Esta funcion recibe una lista de tuplas (nombre,nota1, nota2) y retorna un double con el promedio general de la clase'''
-    total = sum(D.values())
-    return round( (sum(D.values()) / len(D)), 2)
+    '''Esta funcion recibe un diccionario {nombre: (nota1, nota2)} y retorna un double con el promedio general de la clase'''
+    return (sum(D.values()) / len(D))
 
-
+#INCISO 4
 def highestProm(D):
-    '''Esta funcion recibe un Diccionario {key = "nombre", value = "promedio"} y devuelve 2 valores (nombreEstudiante, promedio)'''
-    maxProm = max(D.values()) 
-    maxStud = max(D, key=D.get)
+    '''Esta funcion recibe un diccionario {key = "nombre", value = "promedio"} y devuelve 1 tupla con 2 valores:
+        (nombre, promedio)'''
+    return max(D, key=D.get), max(D.values()) 
 
-    return [maxStud, maxProm]
-    
-    
-
-def lowestNote(L):  #intente usar min() pero no entendi como hacerlo ya que en L recibo una lista de tuplas
-    '''Esta funcion recibe una lista de tuplas (nombre,nota1, nota2) y devuelve 2 valores (nombreEstudiante, nota) del estudiante con la nota mas baja'''
-    min = 999
-    for tup in L:
-        if tup[1] < min:
-            min = tup[1]
-            minName = tup[0]
-        if tup[2] < min:
-            min = tup[2]
-            minName = tup[0]
-    return minName, min
+#INCISO 5
+def lowestNote(D):
+    '''Esta funcion recibe un Diccionario {key = "nombre", value = "promedio"} y devuelve 1 tupla con 2 valores:
+         (nombre, nota) del estudiante con la nota mas baja'''
+    return min(D, key= D.get), min(min(D.values()))
 
 
+#INCISO 1
+dictStuds = generateZip(names, notes_1, notes_2)
+print(f'- Primera estructura: se hizo un diccionario nombre: (nota1, nota2) \n\n {dictStuds} \n')
 
-zipedList = generateZip(names, notes_1, notes_2)
-print(f'- Primera estructura: se hizo un zip y obtenemos una lista de tuplas (nombre, nota1, nota2) \n\n {zipedList} \n')
+#INCISO 2
+promStuds = promNotes(dictStuds)
+print(f'- Segunda estructura: se hizo un diccionario nombre: promedio \n\n {promStuds} \n\n')
 
-promStuds = promNotes(zipedList)
-print(f'- Segunda estructura: se hizo un diccionario key = "nombre", value = "promedio" \n\n {promStuds} \n\n')
-
+#INCISO 3
 promClass = promGlobal(promStuds)
-print(f'- El promedio global de notas es {promClass}')
+print(f'- El promedio global de notas es {round(promClass, 2)}')
 
-highPromStud= highestProm(promStuds)
-print(f'- El alumno {highPromStud[0].upper()} es el de mayor promedio con {highPromStud[1]}')
+#INCISO 4
+highStud, highProm= highestProm(promStuds)
+print(f'- El alumno {highStud.upper()} es el de mayor promedio con {highProm}')
 
-lowerNoteStud = lowestNote(zipedList)
-print(f'- El alumno {lowerNoteStud[0]} es el de menor nota con {lowerNoteStud[1]}')
+#INCISO 5
+lowerStud, lowerNote = lowestNote(dictStuds)
+print(f'- El alumno {lowerStud.upper()} es el de menor nota con {lowerNote}')
