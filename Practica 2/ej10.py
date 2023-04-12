@@ -13,6 +13,8 @@ notes_2 = [30, 95, 28, 84, 84, 43, 66, 51, 4, 11, 58, 10, 13, 34, 96, 71, 86, 37
 
 #INCISO 1
 def generateZip(names, notes_1, notes_2):
+    '''Esta funcion recibe 1 str (names) y 2 listas (notes_1, notes_2), se formatea el string de nombres para obtener una lista
+        con los nombres de los alumnos. Retorna un diccionario {nombre: (nota1, nota2)}'''
     fixedText = names.replace('\n','').replace(' ', '').replace("'", '').split(',')
     return {name: (note1, note2) for name, note1, note2 in zip(fixedText,notes_1, notes_2)}
 
