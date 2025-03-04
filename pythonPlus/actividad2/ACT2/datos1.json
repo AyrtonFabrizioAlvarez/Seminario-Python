@@ -1,0 +1,16 @@
+[{
+    "nombre": "pipi",
+    "genero": "femenino",
+    "memes": ["uno", "dos"]
+},
+{
+    "nombre": "pachi",
+    "genero": "neutro",
+    "memes": ["uno"]
+},
+{
+    "nombre": "gachi",
+    "genero": "masculino",
+    "memes": []
+}
+]
